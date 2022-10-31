@@ -4,7 +4,7 @@ const { describe, expect, test } = require('@jest/globals');
 
 const baseUrl = 'http://localhost:4003';
 
-describe('GET /api/files',() => {
+describe('POST /api/files',() => {
 
     test('should return status code 400, invalid file extension', async () => {
 
