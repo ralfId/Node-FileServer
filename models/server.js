@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
+const db = require('../db/dbconnection');
 
 class Server {
 
@@ -8,12 +9,13 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
 
-         //middlewares de la app
-         this.middlewares();
-         
+        this.dbConnection();
+        //middlewares de la appƒ
+        this.middlewares();
+
         //rutas de la app
         this.routes();
-       
+
 
     }
     middlewares() {
@@ -30,10 +32,19 @@ class Server {
         }))
     }
 
+    async dbConnection() {
+        try {
+            await db.authenticate();
+            console.log('Base de datos conectada');
+        } catch (error) {
+            console.log(error)
+            throw new Error('Error al iniciar la base de datos');
+        }
+    }
 
     routes() {
 
-        this.app.use( '/api/files', require('../routes/files'));
+        this.app.use('/api/files', require('../routes/files'));
     }
 
     listen() {
@@ -42,7 +53,7 @@ class Server {
         })
     }
 
-   
+
 }
 
 module.exports = Server;
