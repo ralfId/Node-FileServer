@@ -7,6 +7,7 @@ const Employee = require('../models/Employee');
 
 const uploadFile = async (req = request, res = response) => {
 
+    console.log(req.files);
     if (!isValidExtension(req.files)) {
         return res.status(400).json({
             msg: 'Extension de archivo no valida'
@@ -19,7 +20,7 @@ const uploadFile = async (req = request, res = response) => {
 
         let resultData = [];
 
-        fs.createReadStream(req.files.file.tempFilePath)
+        fs.createReadStream(req.files.data_empleados.tempFilePath)
             .pipe(csv(['First_Name', 'Last_Name', 'Email', 'Country', 'City', 'Address', 'Profession', 'Company']))
             .on('data', (data) => {
                 resultData.push(data);
@@ -30,8 +31,8 @@ const uploadFile = async (req = request, res = response) => {
                 resultData = resultData.filter((element) => element.Email !== 'Email');
 
                 Employee.bulkCreate(resultData).then(async () => {
-                    const fileName = await saveFileInServer(req.files.file);
-                    console.log(fileName)
+                    const fileName = await saveFileInServer(req.files.data_empleados);
+      
                     res.json({
                         msg: 'Archivo subido correctamente',
                         data: {

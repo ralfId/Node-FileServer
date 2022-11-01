@@ -1,7 +1,9 @@
 const express = require('express')
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
+const swaggerUi = require('swagger-ui-express');
 const db = require('../db/dbconnection');
+const { swaggerSpec } = require('../swagger_docs/swagger');
 
 class Server {
 
@@ -30,6 +32,9 @@ class Server {
             useTempFiles: true,
             tempFileDir: '/tmp/',
         }))
+        //documentacion
+        this.app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
     }
 
     async dbConnection() {

@@ -3,8 +3,9 @@ const path = require('path');
 const validFileExtension = ['csv'];
 
 const isValidExtension = (files) => {
-    const { file } = files;
-    const fileExtension = file.name.substring(file.name.lastIndexOf('.') + 1);
+    console.log(files);
+    const { data_empleados } = files;
+    const fileExtension = data_empleados.name.substring(data_empleados.name.lastIndexOf('.') + 1);
 
     if (!validFileExtension.includes(fileExtension)) {
         return false;
