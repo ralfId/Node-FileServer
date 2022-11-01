@@ -12,8 +12,8 @@ const router = Router();
  *   consumes:
  *   - multipart/form-data
  *   parameters:
- *   - name: data_empleados
- *     in: formData
+ *   - in: formData
+ *     name: data_empleados
  *     description: Un archivo .csv que contiene los datos a procesar
  *     required: true
  *     schema:
